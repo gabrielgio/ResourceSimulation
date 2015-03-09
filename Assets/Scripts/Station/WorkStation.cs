@@ -14,32 +14,15 @@ public class WorkStation : MonoBehaviour {
 	public double AvaliableRock = 100;
 	public double AvaliableIron = 10;
 
-	public int Workers{ get { return workers.Count; } }
+	public List<Worker> Workers{ get { return workers; } }
 	
 	// Use this for initialization
 	void Start () {
 		workers = new List<Worker> ();
-		AddWorker (ResourceSource.Wood);
-		AddWorker (ResourceSource.Wood);
-		AddWorker (ResourceSource.Wood);
-		AddWorker (ResourceSource.Wood);
+		for (int i = 0; i < 1000; i++) {
+			AddWorker (ResourceSource.Wood);	
+		}
 
-		
-		AddWorker (ResourceSource.Iron);
-		AddWorker (ResourceSource.Iron);
-		AddWorker (ResourceSource.Iron);
-		AddWorker (ResourceSource.Iron);
-		AddWorker (ResourceSource.Iron);
-
-
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
-		AddWorker (ResourceSource.Rock);
 	}
 	
 	// Update is called once per frame

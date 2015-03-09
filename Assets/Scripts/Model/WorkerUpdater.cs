@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 public class WorkerUpdater : MonoBehaviour {
 
@@ -40,6 +41,15 @@ public class WorkerUpdater : MonoBehaviour {
 		case Info.Workers:
 			text.text = workStation.Workers.ToString();
 			return;
+		case Info.WorkersOnWood:
+			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Wood).ToString();
+			return;
+		case Info.WorkersOnRock:
+			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Rock).ToString();
+			return;
+		case Info.WorkersOnIron:
+			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Iron).ToString();
+			return;
 		}
 	
 	}
@@ -53,5 +63,8 @@ public enum Info
 	AvaliableWood,
 	AvaliableRock,
 	AvaliableIron,
-	Workers
+	Workers,
+	WorkersOnWood,
+	WorkersOnRock,
+	WorkersOnIron
 }
