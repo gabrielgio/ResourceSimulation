@@ -27,13 +27,13 @@ public class Prompt : MonoBehaviour {
 
 	void EditEnd (string arg)
 	{
-		WriteOnPrompt (arg);
+		ProcessMsg (arg);
 	}
 
 	public void WriteOnPrompt(string value)
 	{
 		if (TextOut != null) {
-			TextOut.text += "\n"+ProcessMsg(value);
+			TextOut.text += "\n"+value;
 		}
 		
 		if (TextIn != null) {
@@ -46,13 +46,15 @@ public class Prompt : MonoBehaviour {
 		}
 	}
 
-	private string ProcessMsg(string msg)
+	private void ProcessMsg(string msg)
 	{
 
 		msg += " ";
 
-		if(msg.Count(x => x == ':') == 0)
-		   return CmdMsg("msg", "c", msg);
+		if (msg.Count (x => x == ':') == 0) {
+			CmdMsg ("msg", "c", msg);
+			return;
+		}
 
 		List<string> parans = new List<string> ();
 
@@ -65,94 +67,101 @@ public class Prompt : MonoBehaviour {
 			if(indexOf == -1) {
 				parans.Add(msg.Substring(0,msg.Count()-1));
 			}
-			else{
+			else
+			{
 				parans.Add(msg.Substring(0,indexOf));
 			}
 			msg = msg.Substring(indexOf + 1,msg.Count() - indexOf - 1);
 		}
 
-		return ProcessMsg(parans.ToArray());
+		ProcessMsg (parans.ToArray	 ());
 	}
 
-	private string ProcessMsg(string[] parans)
+	private void ProcessMsg(string[] parans)
 	{
 		if (parans [0] == "Wood" || parans [0] == "Iron" || parans [0] == "Rock") {
-			return CmdMove(parans);
+			 CmdMove(parans);
+			return;
 		} else if (parans [0] == "msg") {
-			return CmdMsg(parans);
+			CmdMsg(parans);
+			return;
 		}
 
-		return CmdMsg("msg","f",parans.Aggregate((current, next) => current + ":" + next));
+		CmdMsg("msg","f",parans.Aggregate((current, next) => current + ":" + next));
 	}
 
-	public string CmdMsg(params string[] msg)
+	public void CmdMsg(params string[] msg)
 	{
 		if(msg[0] != "msg")
-			return CmdMsg("msg","r", "Something is much wrong CmdMsg");
+			CmdMsg("msg","r", "Something is much wrong CmdMsg");
 
 		if (msg.Length == 1) {
-			return "<b><i>empty msg</i></b>";
+			WriteOnPrompt("<b><i>empty msg</i></b>");
 		}
 		else if (msg.Length == 2) {
-			return "<b><i>" + msg[1] + "</i></b>";
+			WriteOnPrompt("<b><i>" + msg[1] + "</i></b>");
 
 		}else{
 			switch(msg[1])
 			{
 			case "r":
-				return "<color=red>" + msg [2] + "</color>";
+				WriteOnPrompt("<color=red>" + msg [2] + "</color>");
+				break;
 			case "b":
-				return "<color=blue>" + msg [2] + "</color>";
+				WriteOnPrompt("<color=blue>" + msg [2] + "</color>");
+				break;
 			case "i":
-				return "<b><i>" + msg [2] + "<b><i>";
+				WriteOnPrompt("<b><i>" + msg [2] + "</i></b>");
+				break;
 			case "c":
-				return CmdMsg("msg","r", msg[2])+ "invalid command";
+				CmdMsg("msg","r", msg[2]+ " invalid command");
+				break;
 			case "f":
-				return CmdMsg("msg","r", msg[2])+  " command not found";
+				CmdMsg("msg","r", msg[2]+  " command not found");
+				break;
 			default:
-				return CmdMsg("msg", "r", "invalid params");
+				CmdMsg("msg", "r", "invalid params");
+				break;
 			}
 		}
 	}
 
-	private void PromptCmd(params string[] parans)
-	{
-		WriteOnPrompt("\n"+CmdMsg(parans));
-	}
-
-	private string CmdMove(params string[] parans)
+	private void CmdMove(params string[] parans)
 	{
 		WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
 
-		if (!(parans [0] == "Wood" || parans [0] == "Iron" || parans [0] == "Rock") ) 
-			return CmdMsg("msg","r", "Something is much wrong CmdMove");
+		if (!(parans [0] == "Wood" || parans [0] == "Iron" || parans [0] == "Rock")) 
+			CmdMsg ("msg", "r", "Something is much wrong CmdMove");
 
 		if (!(parans [1] == "Wood" || parans [1] == "Iron" || parans [1] == "Rock"))
-			return CmdMsg("msg","r", parans[1] + " is not a valide resource");
+			CmdMsg ("msg", "r", parans [1] + " is not a valide resource");
 
 		int times = 1;
+		int movedWorker = 0;
 
-		if(parans.Length >= 3)
-			if(!int.TryParse(parans[2], out times))
-			   times = 1;
+		if (parans.Length >= 3)
+			int.TryParse (parans [2], out times);
+			
 
 		ResourceSource preRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [0]);
 		ResourceSource posRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [1]);
 
-		PromptCmd ("msg", "b", "Starting to move workers");
-
-		do {
+		while (times-- != 0) {
 			Worker worker = workStation.Workers.FirstOrDefault (x => x.WorkingOn == preRes);
 		
-			if (worker == null) {
-				PromptCmd ("msg", "r", "  there is no worker working on " + parans [0]);
+			if (worker == null)
 				break;
-			} else {
+			else {
 				worker.WorkingOn = posRes;
-				PromptCmd ("msg", "b", "  worker has been moved from " + parans [0] + " to " + parans [1]);
+				movedWorker++;
 			}
-		} while (times-- == 0);
+		}
 
-		return CmdMsg ("msg", "b", "Finish to move workores");
+		if(movedWorker == 0)
+			CmdMsg ("msg", "r", "there is no worker working on " + parans [0]);
+		else if (movedWorker == 1)
+			CmdMsg ("msg", "b", "A workers has been moved from " + parans [0] + " to " + parans [1]);
+		else
+			CmdMsg ("msg", "b", movedWorker.ToString()+" workers has been moved from " + parans [0] + " to " + parans [1]);
 	}
 }
