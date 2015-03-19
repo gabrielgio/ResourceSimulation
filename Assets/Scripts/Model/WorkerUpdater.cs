@@ -18,6 +18,7 @@ public class WorkerUpdater : MonoBehaviour {
 
 		Text text = GetComponent<Text> ();
 		WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
+		BuildStation buildStation = GameObject.Find ("Main Camera").GetComponent<BuildStation> ();
 
 		switch (DiseredInfo) {
 		case Info.Wood:
@@ -42,13 +43,22 @@ public class WorkerUpdater : MonoBehaviour {
 			text.text = workStation.Workers.ToString();
 			return;
 		case Info.WorkersOnWood:
-			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Wood).ToString();
+			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Wood).ToString();
 			return;
 		case Info.WorkersOnRock:
-			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Rock).ToString();
+			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Rock).ToString();
 			return;
 		case Info.WorkersOnIron:
-			text.text = workStation.Workers.Count(x => x.WorkingOn == ResourceSource.Iron).ToString();
+			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Iron).ToString();
+			return;
+		case Info.PercentageWorker:
+			if(workStation.Workers.Count(x => !x.IsBuilt) == 0)
+				text.text = "0%";
+			else
+				text.text = string.Format("{0:#}%", workStation.Workers.First(x => !x.IsBuilt).Percentage);	
+			return;
+		case Info.WorkerOnBuild:
+			text.text = buildStation.Workers.Count(x => !x.IsBuilt).ToString();
 			return;
 		}
 	
@@ -66,5 +76,7 @@ public enum Info
 	Workers,
 	WorkersOnWood,
 	WorkersOnRock,
-	WorkersOnIron
+	WorkersOnIron,
+	PercentageWorker,
+	WorkerOnBuild
 }

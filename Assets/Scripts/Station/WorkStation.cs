@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class WorkStation : MonoBehaviour {
 
-	private List<Worker> workers;
+	private List<Worker> _workers;
 
 	public double Wood = 0;
 	public double Rock = 0;
@@ -14,12 +14,12 @@ public class WorkStation : MonoBehaviour {
 	public double AvaliableRock = 100;
 	public double AvaliableIron = 10;
 
-	public List<Worker> Workers{ get { return workers; } }
+	public List<Worker> Workers{ get { return _workers; } }
 	
 	// Use this for initialization
 	void Start () {
-		workers = new List<Worker> ();
-		for (int i = 0; i < 1000; i++) {
+		_workers = new List<Worker> ();
+		for (int i = 0; i < 3; i++) {
 			AddWorker (ResourceSource.Wood);	
 		}
 
@@ -28,8 +28,8 @@ public class WorkStation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		foreach (var item in workers) {
-			switch (item.WorkingOn) {
+		foreach (var item in _workers) {
+			switch (item.Type) {
 			case ResourceSource.Wood:
 				ChopTree(item.WorkRate*Time.deltaTime);
 				break;
@@ -64,6 +64,6 @@ public class WorkStation : MonoBehaviour {
 
 	public void AddWorker(ResourceSource resource)
 	{
-		workers.Add(new Worker(){ WorkingOn = resource});
+		_workers.Add(new Worker(resource));
 	}
 }

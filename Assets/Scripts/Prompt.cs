@@ -12,6 +12,15 @@ public class Prompt : MonoBehaviour {
 	public InputField TextIn;
 	public Scrollbar Scroll;
 
+	private List<string> commands;
+	private int indexOfLine = 0;
+
+
+	public Prompt()
+	{
+		commands = new List<string> ();
+	}
+
 	// Use this for initialization
 	void Start () {
 
@@ -28,6 +37,8 @@ public class Prompt : MonoBehaviour {
 	void EditEnd (string arg)
 	{
 		ProcessMsg (arg);
+		commands.Add (arg);
+		indexOfLine = 0;
 	}
 
 	public void WriteOnPrompt(string value)
@@ -79,11 +90,14 @@ public class Prompt : MonoBehaviour {
 
 	private void ProcessMsg(string[] parans)
 	{
-		if (parans [0] == "Wood" || parans [0] == "Iron" || parans [0] == "Rock") {
-			 CmdMove(parans);
+		if (parans [0] == "wood" || parans [0] == "iron" || parans [0] == "rock") {
+			CmdMove (parans);
 			return;
 		} else if (parans [0] == "msg") {
-			CmdMsg(parans);
+			CmdMsg (parans);
+			return;
+		} else if (parans [0] == "build") {
+			CmdBuild(parans);
 			return;
 		}
 
@@ -114,7 +128,7 @@ public class Prompt : MonoBehaviour {
 				WriteOnPrompt("<b><i>" + msg [2] + "</i></b>");
 				break;
 			case "c":
-				CmdMsg("msg","r", msg[2]+ " invalid command");
+				WriteOnPrompt("<color=red>" + msg[2]+ "</color> invalid command");
 				break;
 			case "f":
 				CmdMsg("msg","r", msg[2]+  " command not found");
@@ -126,14 +140,59 @@ public class Prompt : MonoBehaviour {
 		}
 	}
 
+	private void CmdBuild (params string[] parans)
+	{
+		if (parans [0] != "build") {
+			CmdMsg ("msg", "r", "Something is much wrong CmdBuild");
+			return;
+		}
+
+		if (parans.Length == 1) {
+			CmdMsg ("msg", "r", "param is missing");
+		}
+
+		int times = 1;
+		int builtWorker = 0;
+		
+		if (parans.Length >= 3)
+			int.TryParse (parans [2], out times);
+
+		if (parans [1] == "worker") {
+			WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
+			BuildStation buildStation = GameObject.Find ("Main Camera").GetComponent<BuildStation> ();
+			while (times-- != 0) {
+				if (workStation.Wood > buildStation.WorkerPrice) {
+					workStation.Wood -= buildStation.WorkerPrice;
+					buildStation.BuildWorker ();
+					builtWorker++;
+				}
+				else{
+					break;
+				}
+			}
+
+			if(builtWorker == 0)
+			{
+				CmdMsg ("msg", "r", "Not enough wood to build a worker");
+				return;
+			}
+			else{
+				CmdMsg ("msg", "b", string.Format("{0} workers has added to build", builtWorker));
+				return;
+			}
+
+		}
+		CmdMsg ("msg", "r", "Invalid params.");
+	}
+
 	private void CmdMove(params string[] parans)
 	{
 		WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
 
-		if (!(parans [0] == "Wood" || parans [0] == "Iron" || parans [0] == "Rock")) 
+		if (!(parans [0] == "wood" || parans [0] == "iron" || parans [0] == "rock")) 
 			CmdMsg ("msg", "r", "Something is much wrong CmdMove");
 
-		if (!(parans [1] == "Wood" || parans [1] == "Iron" || parans [1] == "Rock"))
+		if (!(parans [1] == "wood" || parans [1] == "iron" || parans [1] == "rock"))
 			CmdMsg ("msg", "r", parans [1] + " is not a valide resource");
 
 		int times = 1;
@@ -143,16 +202,16 @@ public class Prompt : MonoBehaviour {
 			int.TryParse (parans [2], out times);
 			
 
-		ResourceSource preRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [0]);
-		ResourceSource posRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [1]);
+		ResourceSource preRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), FirstCharToUpper(parans [0]));
+		ResourceSource posRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), FirstCharToUpper (parans [1]));
 
 		while (times-- != 0) {
-			Worker worker = workStation.Workers.FirstOrDefault (x => x.WorkingOn == preRes);
+			Worker worker = workStation.Workers.FirstOrDefault (x => x.Type == preRes);
 		
 			if (worker == null)
 				break;
 			else {
-				worker.WorkingOn = posRes;
+				worker.Type = posRes;
 				movedWorker++;
 			}
 		}
@@ -163,5 +222,12 @@ public class Prompt : MonoBehaviour {
 			CmdMsg ("msg", "b", "A workers has been moved from " + parans [0] + " to " + parans [1]);
 		else
 			CmdMsg ("msg", "b", movedWorker.ToString()+" workers has been moved from " + parans [0] + " to " + parans [1]);
+	}
+
+	private string FirstCharToUpper(string input)
+	{
+		if (String.IsNullOrEmpty(input))
+			throw new ArgumentException("ARGH!");
+		return input.First().ToString().ToUpper() + input.Substring(1);
 	}
 }
