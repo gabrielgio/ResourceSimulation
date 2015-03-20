@@ -1,0 +1,8 @@
+{
+  "build":{
+    "worker_time" : 60.1
+  },
+  "work":{
+    "worker_rate" : 0.016
+  }
+}

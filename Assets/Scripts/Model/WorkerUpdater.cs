@@ -55,7 +55,7 @@ public class WorkerUpdater : MonoBehaviour {
 			if(workStation.Workers.Count(x => !x.IsBuilt) == 0)
 				text.text = "0%";
 			else
-				text.text = string.Format("{0:#}%", workStation.Workers.First(x => !x.IsBuilt).Percentage);	
+				text.text = string.Format("{0}%", workStation.Workers.First(x => !x.IsBuilt	).Percentage);	
 			return;
 		case Info.WorkerOnBuild:
 			text.text = buildStation.Workers.Count(x => !x.IsBuilt).ToString();

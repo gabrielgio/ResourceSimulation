@@ -22,4 +22,10 @@ public class BattleStation : MonoBehaviour {
 	public void AddWarrior(WarriorType warrior)	{
 		_warriors.Add (new Warrior(warrior));
 	}
+
+	void Awake () {
+		// Make the game run as fast as possible in the web player
+		Application.targetFrameRate = 30;
+		QualitySettings.vSyncCount = 1;
+	}
 }

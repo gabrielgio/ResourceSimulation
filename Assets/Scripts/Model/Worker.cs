@@ -3,14 +3,12 @@ using System.Collections;
 
 public class Worker {
 
-	public const double TIME = 5;
-
 	private double _timeIn = 0;
 	
 	public bool IsBuilt {
 		get {
 
-			return (TIME - _timeIn) <= 0;
+			return (GameSetting.Instance.TimeToBuildWorker - _timeIn) <= 0;
 		}
 	}
 	
@@ -18,14 +16,14 @@ public class Worker {
 
 	public double WorkRate {
 		get {
-			return 0.016;
+			return GameSetting.Instance.WorkerRate;
 		}
 	}
 
 	public double Percentage 
 	{
 		get{
-			return (_timeIn/TIME)*100;
+			return (_timeIn/GameSetting.Instance.TimeToBuildWorker)*100;
 		}
 	}
 	

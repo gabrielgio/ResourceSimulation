@@ -1,0 +1,76 @@
+{
+    "description": "this is json contains the preset for text",
+    "preset": [
+        {
+            "code": "r",
+            "msg": "<color=red>{0}</color>"
+        },
+        {
+            "code": "b",
+            "msg": "<color=blue>{0}</color>"
+        },
+        {
+            "code": "i",
+            "msg": "<b><i>{0}</i></b>"
+        },
+        {
+            "code": "c",
+            "msg": "<color=red>{0}</color> invalid command"
+        },
+        {
+            "code": "f",
+            "msg": "<color=red>{0}</color> command not found"
+        },
+        {
+            "code": "default",
+            "msg": "<color=red>There is no preset for {0}</color>"
+        }
+    ],
+    "feedback" : [
+      {
+        "code" : "worker_build",
+        "msgcode" : "b",
+        "msg" : "{0} workers have been added to build"
+      },
+      {
+        "code" : "not_enough_resource",
+        "msgcode" : "r",
+        "msg" : "Not enouth {0} to build a {1}"
+      },
+      {
+        "code" : "invalid_param",
+        "msgcode" : "r",
+        "msg" : "Invalid param {0}"
+      },
+      {
+        "code" : "invalid_resource",
+        "msgcode" : "r",
+        "msg" : "{0} is a invalid resource."
+      },
+      {
+        "code" : "no_worker",
+        "msgcode" : "r",
+        "msg" : "There is no worker working on {0}"
+      },
+      {
+        "code" : "moved_worker",
+        "msgcode" : "b",
+        "msg" : "{0} workers have been moved from {1} to {2}"
+      },
+      {
+        "code" : "deafult",
+        "msgcode" : "r",
+        "msg" : "There is no preset to {0}"
+      },
+      {
+        "code" : "wrong",
+        "msgcode" : "r",
+        "msg" : "Something is much wrong on {0}"
+      },
+      {
+        "code" : "param_missing",
+        "msgcode" : "r",
+        "msg" : "Param missing"
+      }
+    ]
+}
