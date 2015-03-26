@@ -1,6 +1,31 @@
 {
   "build":{
-    "worker_time" : 60.1
+    "worker_time" : 60,
+    "worker_cost"{
+    	"Wood" : 1,
+    	"Rock" : 0,
+    	"Iron" : 0
+    },
+    "warrior_cost" :{
+    	"Minion" : {
+	    	"Wood" : 1,
+	    	"Rock" : 0,
+	    	"Iron" : 0
+    	},
+    	"Warrior" : {
+	    	"Wood" : 1,
+	    	"Rock" : 0,
+	    	"Iron" : 0
+    	},
+    	"Legend" : {
+	    	"Wood" : 1,
+	    	"Rock" : 0,
+	    	"Iron" : 0
+    	},
+    },
+    "Minion" : 60,
+	"Warrior" : 180,
+	"Legend" : 220
   },
   "work":{
     "worker_rate" : 0.016

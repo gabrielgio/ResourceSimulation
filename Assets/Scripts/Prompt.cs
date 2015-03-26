@@ -34,7 +34,7 @@ public class Prompt : MonoBehaviour {
 
 	void EditEnd (string arg)
 	{
-		WriteOnPrompt (Msg.Instance.Process (arg));
+		WriteOnPrompt (Input.Instance.Process (arg));
 		commands.Add (arg);
 	}
 

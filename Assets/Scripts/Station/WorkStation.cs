@@ -44,6 +44,11 @@ public class WorkStation : MonoBehaviour {
 		}
 	}
 
+	public void OnBuiltWorker()
+	{
+		Workers.Add (new Worker ());
+	}
+
 	public void ChopTree(double amount)
 	{
 		Wood += amount;

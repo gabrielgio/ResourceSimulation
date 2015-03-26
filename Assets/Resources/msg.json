@@ -33,6 +33,11 @@
         "msg" : "{0} workers have been added to build"
       },
       {
+        "code" : "warrior_build",
+        "msgcode" : "b",
+        "msg" : "{0} warrior have been added to build"
+      },
+      {
         "code" : "not_enough_resource",
         "msgcode" : "r",
         "msg" : "Not enouth {0} to build a {1}"

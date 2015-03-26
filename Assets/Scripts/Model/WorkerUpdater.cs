@@ -23,43 +23,40 @@ public class WorkerUpdater : MonoBehaviour {
 		switch (DiseredInfo) {
 		case Info.Wood:
 			text.text = workStation.Wood.ToString();
-			return;
+			break;
 		case Info.Rock:
 			text.text = workStation.Rock.ToString();
-			return;
+			break;
 		case Info.Iron:
 			text.text = workStation.Iron.ToString();
-			return;
+			break;
 		case Info.AvaliableWood:
 			text.text = workStation.AvaliableWood.ToString();
-			return;
+			break;
 		case Info.AvaliableRock:
 			text.text = workStation.AvaliableRock.ToString();
-			return;
+			break;
 		case Info.AvaliableIron:
 			text.text = workStation.AvaliableIron.ToString();
-			return;
+			break;
 		case Info.Workers:
 			text.text = workStation.Workers.ToString();
-			return;
+			break;
 		case Info.WorkersOnWood:
 			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Wood).ToString();
-			return;
+			break;
 		case Info.WorkersOnRock:
 			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Rock).ToString();
-			return;
+			break;
 		case Info.WorkersOnIron:
 			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Iron).ToString();
-			return;
-		case Info.PercentageWorker:
-			if(workStation.Workers.Count(x => !x.IsBuilt) == 0)
-				text.text = "0%";
-			else
-				text.text = string.Format("{0}%", workStation.Workers.First(x => !x.IsBuilt	).Percentage);	
-			return;
+			break;
 		case Info.WorkerOnBuild:
-			text.text = buildStation.Workers.Count(x => !x.IsBuilt).ToString();
-			return;
+			text.text = buildStation.WorkerOnBuild.ToString();
+			break;
+		case Info.WarriorOnBuild:
+			text.text = buildStation.Warriors.Count().ToString();
+			break;
 		}
 	
 	}
@@ -78,5 +75,6 @@ public enum Info
 	WorkersOnRock,
 	WorkersOnIron,
 	PercentageWorker,
-	WorkerOnBuild
+	WorkerOnBuild,
+	WarriorOnBuild
 }

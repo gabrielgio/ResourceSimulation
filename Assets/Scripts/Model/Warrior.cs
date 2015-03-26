@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Warrior{
 
@@ -44,6 +45,7 @@ public class Warrior{
 	}
 }
 
+[Serializable]
 public enum WarriorType
 {
 	Minion,
