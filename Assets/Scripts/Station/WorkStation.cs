@@ -10,35 +10,39 @@ public class WorkStation : MonoBehaviour {
 	public double Rock = 0;
 	public double Iron = 0;
 
-	public double AvaliableWood = 1000;
-	public double AvaliableRock = 100;
-	public double AvaliableIron = 10;
-
 	public List<Worker> Workers{ get { return _workers; } }
+
+	public WorldStation World;
 	
 	// Use this for initialization
 	void Start () {
 		_workers = new List<Worker> ();
-		for (int i = 0; i < 3; i++) {
-			AddWorker (ResourceSource.Wood);	
-		}
 
+		AddWorker (ResourceSource.Wood);
+
+		if (World == null)
+			World = GameObject.Find ("Main Camera").GetComponent<WorldStation> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 
 		foreach (var item in _workers) {
 			switch (item.Type) {
 			case ResourceSource.Wood:
-				ChopTree(item.WorkRate*Time.deltaTime);
+				double amount = World.ChopTree(item.WorkRate*Time.deltaTime);
+				if(amount >=0)
+					Wood += amount;
 				break;
 			case ResourceSource.Rock:
-				MineRock(item.WorkRate*Time.deltaTime/10);
+				amount = World.MineRock(item.WorkRate*Time.deltaTime/10);
+				if(amount >= 0)
+					Rock += amount;
 				break;
 
 			case ResourceSource.Iron:
-				MineIron(item.WorkRate*Time.deltaTime/100);
+				amount = World.GrabFood(item.WorkRate*Time.deltaTime/100);
+				if(amount >= 0)
+					Iron += amount;
 				break;
 			}
 		}
@@ -47,24 +51,6 @@ public class WorkStation : MonoBehaviour {
 	public void OnBuiltWorker()
 	{
 		Workers.Add (new Worker ());
-	}
-
-	public void ChopTree(double amount)
-	{
-		Wood += amount;
-		AvaliableWood -= amount;
-	}
-
-	public void MineRock(double amount)
-	{
-		Rock += amount;
-		AvaliableRock -= amount;
-	}
-
-	public void MineIron(double amount) 
-	{
-		Iron += amount;
-		AvaliableIron -= amount;
 	}
 
 	public void AddWorker(ResourceSource resource)

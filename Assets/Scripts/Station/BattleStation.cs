@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 public class BattleStation : MonoBehaviour {
 
-	private List<Warrior> _warriors;
-
-	private List<Warrior> Warrior { get { return _warriors; } }
+	private List<Warrior> Warrior;
 
 	// Use this for initialization
 	void Start () {
-		_warriors = new List<Warrior> ();
+		Warrior = new List<Warrior> ();
 	}
 	
 	// Update is called once per frame
@@ -18,8 +16,7 @@ public class BattleStation : MonoBehaviour {
 
 	}
 
-
-	public void AddWarrior(WarriorType warrior)	{
-		_warriors.Add (new Warrior(warrior));
+	public void WarriorDone(WarriorDone warrior) {
+		Warrior.Add (new Warrior(warrior.Warrior));
 	}
 }

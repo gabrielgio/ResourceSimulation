@@ -30,15 +30,6 @@ public class WorkerUpdater : MonoBehaviour {
 		case Info.Iron:
 			text.text = workStation.Iron.ToString();
 			break;
-		case Info.AvaliableWood:
-			text.text = workStation.AvaliableWood.ToString();
-			break;
-		case Info.AvaliableRock:
-			text.text = workStation.AvaliableRock.ToString();
-			break;
-		case Info.AvaliableIron:
-			text.text = workStation.AvaliableIron.ToString();
-			break;
 		case Info.Workers:
 			text.text = workStation.Workers.ToString();
 			break;
@@ -67,9 +58,6 @@ public enum Info
 	Wood,
 	Rock,
 	Iron,
-	AvaliableWood,
-	AvaliableRock,
-	AvaliableIron,
 	Workers,
 	WorkersOnWood,
 	WorkersOnRock,

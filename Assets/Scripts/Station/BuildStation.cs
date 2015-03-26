@@ -8,19 +8,19 @@ public class BuildStation : MonoBehaviour {
 
 	public double WorkerPrice = 1;
 
-	public double TimesGone = 0;
-
 	public int WorkerOnBuild = 1;
 
 	private double _time = 0;
 
 	public Stack<Tuple<WarriorType,double>> Warriors;
 
-	public BuildWorkerEvent BuildChanged;
+	public PercentageChangedEvent BuildChanged;
 
 	public UnityEvent OnBuiltWorker;
 
-	public BuildWarriorEvent OnBuiltWarrior;
+	public BuildWarriorEvent BuildWarriorChanged;
+
+	public WarriorDoneEvent BuildWarriorDone;
 
 	void Start () {
 		Warriors = new Stack<Tuple<WarriorType,double>> ();
@@ -38,7 +38,7 @@ public class BuildStation : MonoBehaviour {
 				OnBuiltWorker.Invoke();
 			}
 
-			BuildChanged.Invoke (new BuildWorkerEventData ((_time / GameSetting.Instance.TIME_BUILD_WORKER) * 100));
+			BuildChanged.Invoke (new PercentageChanged ((_time / GameSetting.Instance.TIME_BUILD_WORKER) * 100));
 		}
 
 		if (Warriors.Count != 0) {
@@ -50,9 +50,10 @@ public class BuildStation : MonoBehaviour {
 				Warriors.Push(tuple);
 			}else{
 				tuple.Value2 = 0;
+				BuildWarriorDone.Invoke(new WarriorDone(tuple.Value1));
 			}
 
-			OnBuiltWarrior.Invoke(new BuildWarriorrEventData((tuple.Value2/time)*100, tuple.Value1));
+			BuildWarriorChanged.Invoke(new BuildWarriorrEventData((tuple.Value2/time)*100, tuple.Value1));
 		}
 	}
 
