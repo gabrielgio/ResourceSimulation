@@ -1961,9 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521efcde7b41d40e9908f48b35a8462e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Wood: 1000
-  Rock: 100
-  Food: 10
+  Index: 0
   WoodChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2014,6 +2012,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: PercentageChangedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  WolrdChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1809451011}
+        m_MethodName: WorldChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: WorldChangedEventTrigger, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!1 &776327167
 GameObject:
@@ -4649,6 +4664,7 @@ GameObject:
   - 224: {fileID: 1809451008}
   - 222: {fileID: 1809451010}
   - 114: {fileID: 1809451009}
+  - 114: {fileID: 1809451011}
   m_Layer: 5
   m_Name: WorldPanel
   m_TagString: Untagged
@@ -4702,6 +4718,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1809451007}
+--- !u!114 &1809451011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1809451007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08d5465cd334240b791999b48df9ac58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldName: {fileID: 1843450650}
 --- !u!1 &1835254091
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,8 +4828,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20.0999985, y: -8.49998856}
-  m_SizeDelta: {x: 40.1999969, y: 17}
+  m_AnchoredPosition: {x: 46.2000008, y: -8.5}
+  m_SizeDelta: {x: 92.5, y: 17}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1843450650
 MonoBehaviour:

@@ -2,26 +2,34 @@
 using System.Collections;
 using System;
 using System.Linq;
-public class Move : Singleton<Move> {
-	public string CmdMove(params string[] parans)
+public class Move : Singleton<Move>, ICmd {
+
+
+	public string[] Functions{
+		get{
+			return new string[]{"wood", "iron", "rock"};
+		}
+	}
+
+	public string Cmd(params string[] args)
 	{
 		WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
 		
-		if (!(parans [0] == "wood" || parans [0] == "iron" || parans [0] == "rock")) 
+		if (!(args [0] == "wood" || args [0] == "iron" || args [0] == "rock")) 
 			return ProcessFeedback("wrong","CmdMove");
 		
-		if (!(parans [1] == "wood" || parans [1] == "iron" || parans [1] == "rock"))
-			return ProcessFeedback ("invalid_resource", parans [1]);
+		if (!(args [1] == "wood" || args [1] == "iron" || args [1] == "rock"))
+			return ProcessFeedback ("invalid_resource", args [1]);
 		
 		int times = 1;
 		int movedWorker = 0;
 		
-		if (parans.Length >= 3)
-			int.TryParse (parans [2], out times);
+		if (args.Length >= 3)
+			int.TryParse (args [2], out times);
 		
 		
-		ResourceSource preRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [0].FirstCharToUpper());
-		ResourceSource posRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), parans [1].FirstCharToUpper());
+		ResourceSource preRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), args [0].FirstCharToUpper());
+		ResourceSource posRes = (ResourceSource)Enum.Parse (typeof(ResourceSource), args [1].FirstCharToUpper());
 		
 		while (times-- != 0) {
 			Worker worker = workStation.Workers.FirstOrDefault (x => x.Type == preRes);
@@ -35,9 +43,9 @@ public class Move : Singleton<Move> {
 		}
 
 		if (movedWorker == 0)
-			return Msg.Instance.ProcessFeedback ("no_worker", parans [0]);
+			return Msg.Instance.ProcessFeedback ("no_worker", args [0]);
 		else
-			return Msg.Instance.ProcessFeedback ("moved_worker", movedWorker.ToString(), parans [0], parans [1]);
+			return Msg.Instance.ProcessFeedback ("moved_worker", movedWorker.ToString(), args [0], args [1]);
 	}
 
 	private string ProcessFeedback(string code, params string[] msgs)

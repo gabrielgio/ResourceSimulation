@@ -6,9 +6,22 @@ using System.Linq;
 
 public class Input : Singleton<Input> {
 
+
+	private List<ICmd> cmds;
+
 	public string Process(string input)
 	{
 		return ProcessParams (ProcessInput (input));
+	}
+
+
+	public Input()
+	{
+		cmds = new List<ICmd> ();
+		cmds.Add (new Bld ());
+		cmds.Add (new Load ());
+		cmds.Add (new Msg ());
+		cmds.Add (new Move ());
 	}
 
 	public string[] ProcessInput(string input){
@@ -38,14 +51,11 @@ public class Input : Singleton<Input> {
 
 	public string ProcessParams(string[] parans)
 	{
-		if (parans [0] == "wood" || parans [0] == "iron" || parans [0] == "rock") {
-			return Move.Instance.CmdMove (parans);
-		} else if (parans [0] == "msg") {
-			return Msg.Instance.CmdMsg (parans);
-		} else if (parans [0] == "build") {
-			return Bld.Instance.CmdBuild (parans);
-		} else {
-			return Msg.Instance.CmdMsg ("msg", "f", parans.Aggregate ((current, next) => current + ":" + next));
-		}
+		ICmd cmd = cmds.FirstOrDefault (x => x.Functions.Contains (parans [0]));
+
+		if (cmd != null)
+			return cmd.Cmd (parans);
+
+		return Msg.Instance.Cmd ("msg", "f", parans.Aggregate ((current, next) => current + ":" + next));
 	}
 }

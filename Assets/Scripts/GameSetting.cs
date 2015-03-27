@@ -2,10 +2,8 @@
 using System.Collections;
 using SimpleJSON;
 
-public class GameSetting{
+public class GameSetting : Singleton<GameSetting> {
 	
-	private static GameSetting instance;
-
 	private JSONNode _jsonNode;
 
 	public const string TITLE = "TITLE - RESOURCE SIMULATION";
@@ -31,17 +29,7 @@ public class GameSetting{
 
 	public WarriorDamage WARRIOR_DAMAGE { get; private set; }
 
-	static public GameSetting Instance 
-	{
-		get{
-			if (instance == null)
-				instance = new GameSetting();
-
-			return instance;
-		}
-	}
-
-	private GameSetting()
+	public GameSetting()
 	{
 		TextAsset textFile = (TextAsset)Resources.Load("settings", typeof(TextAsset));
 		_jsonNode = JSON.Parse (textFile.text);
@@ -122,3 +110,6 @@ public class CostBuildWarrior
 		_jsonNode = jsonNode;
 	}
 }
+
+
+

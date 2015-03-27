@@ -38,6 +38,11 @@
         "msg" : "{0} warrior have been added to build"
       },
       {
+        "code" : "world_loaded",
+        "msgcode" : "b",
+        "msg" : "World loaded"
+      },
+      {
         "code" : "not_enough_resource",
         "msgcode" : "r",
         "msg" : "Not enouth {0} to build a {1}"

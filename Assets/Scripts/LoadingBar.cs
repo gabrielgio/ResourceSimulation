@@ -17,6 +17,8 @@ public class LoadingBar : MonoBehaviour {
 
 	public void OnPercentageChange(PercentageChanged data)
 	{
+		if (value == null)
+			Start ();
 
 		value.sizeDelta = new Vector2 ((float)(size * data.Percentage/100), value.sizeDelta.y);
 	}

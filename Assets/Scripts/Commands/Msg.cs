@@ -5,8 +5,13 @@ using System.Linq;
 using SimpleJSON;
 using System;
 
-public class Msg : Singleton<Msg>
-{
+public class Msg : Singleton<Msg>, ICmd {
+
+	public string[] Functions{
+		get{
+			return new string[]{"msg"};
+		}
+	}
 
 	private Dictionary<string,string> _presets;
 
@@ -31,22 +36,22 @@ public class Msg : Singleton<Msg>
 	public string ProcessFeedback(string code, params string[] msgs) {
 		if (_msgs.ContainsKey (code)) {
 			string premsg = string.Format(_msgs[code].Value2, msgs);
-			return CmdMsg("msg",_msgs[code].Value1, premsg);
+			return Cmd("msg",_msgs[code].Value1, premsg);
 		}
 
-		return CmdMsg("msg",_msgs["deafult"].Value1, string.Format(_msgs["deafult"].Value2, msgs));
+		return Cmd("msg",_msgs["deafult"].Value1, string.Format(_msgs["deafult"].Value2, msgs));
 	}
 
-	public string CmdMsg(params string[] msg)
+	public string Cmd(params string[] msg)
 	{
 		if(msg[0] != "msg")
 			return ProcessFeedback("wrong","CmdMsg");
 		
 		if (msg.Length == 1)
-			return CmdMsg("msg","i","empty msg");
+			return Cmd("msg","i","empty msg");
 		
 		if (msg.Length == 2)
-			return CmdMsg ("msg", "i", msg [1]);
+			return Cmd ("msg", "i", msg [1]);
 
 		if (_presets.ContainsKey (msg [1]))
 			return string.Format (_presets [msg [1]], msg [2]);

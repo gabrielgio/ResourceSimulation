@@ -1,20 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SimpleJSON;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class WorldStation : MonoBehaviour {
 
-	public double Wood;
+	private JSONNode _jsonNode;
 
-	public double Rock;
+	private List<World> _worlds;
 
-	public double Food;
-
-	//TODO: temporary
-	private double _wood;
-	
-	private double _rock;
-	
-	private double _food;
+	public int Index;
 
 	public PercentageChangedEvent WoodChanged;
 
@@ -22,11 +18,34 @@ public class WorldStation : MonoBehaviour {
 
 	public PercentageChangedEvent FoodChanged;
 
-	// Use this for initialization
+	public WorldChangedEventTrigger WolrdChanged;
+	
 	void Start () {
-		_wood = Wood;
-		_rock = Rock;
-		_food = Food;
+
+		TextAsset textFile = (TextAsset)Resources.Load("worlds", typeof(TextAsset));
+		_jsonNode = JSON.Parse (textFile.text);
+		_worlds = new List<World> ();
+		LoadWorlds ();
+		LoadWorld (Index);
+	}
+
+	public void LoadWorlds(){
+
+		foreach (JSONNode item in _jsonNode ["worlds"].AsArray) {
+			World world = new World();
+
+			world.Name = item ["name"];
+
+			world.Rock = item ["Rock"].AsDouble;
+			world.Wood = item ["Wood"].AsDouble;
+			world.Food = item ["Food"].AsDouble;
+
+			world.ARock = item ["Rock"].AsDouble;
+			world.AWood = item ["Wood"].AsDouble;
+			world.AFood = item ["Food"].AsDouble;
+
+			_worlds.Add(world);
+		}
 	}
 	
 	// Update is called once per frame
@@ -34,53 +53,61 @@ public class WorldStation : MonoBehaviour {
 	
 	}
 
+	public void LoadWorld(int index)
+	{
+		Index = index;
+
+		WolrdChanged.Invoke (new WorldChangedEventArgs (){CurrentWorld = _worlds[index]});
+
+		ChopTree (0);
+		MineRock (0);
+		GrabFood (0);
+	}
+
 	public double ChopTree(double amount)
 	{
-
-
-		if ((Wood - amount) > 0) {
-			Wood -= amount;
-			WoodChanged.Invoke(new PercentageChanged((Wood/_wood)*100));
+		if ((_worlds[Index].AWood - amount) > 0) {
+			_worlds[Index].AWood -= amount;
+			WoodChanged.Invoke(new PercentageChanged((_worlds[Index].AWood/_worlds[Index].Wood)*100));
 			return amount;
 		} 
 
-		if (Wood == 0)
+		if (_worlds[Index].AWood == 0)
 			return -1;
 
-		Wood -= Wood;
-		WoodChanged.Invoke(new PercentageChanged((Wood/_wood)*100));
-		return Wood;
+		_worlds[Index].AWood -= _worlds[Index].AWood;
+		WoodChanged.Invoke(new PercentageChanged((_worlds[Index].AWood/_worlds[Index].Wood)*100));
+		return _worlds[Index].AWood;
 	}
-	
+
 	public double MineRock(double amount)
 	{
-		if ((Rock - amount) > 0) {
-			Rock -= amount;
-			RockChanged.Invoke(new PercentageChanged((Rock/_rock)*100));
+		if ((_worlds[Index].ARock - amount) > 0) {
+			_worlds[Index].ARock -= amount;
+			RockChanged.Invoke(new PercentageChanged((_worlds[Index].ARock/_worlds[Index].Rock)*100));
 			return amount;
 		} 
 		
-		if (Rock == 0)
+		if (_worlds[Index].ARock == 0)
 			return -1;
 		
-		Rock -= Rock;
-		RockChanged.Invoke(new PercentageChanged((Rock/_rock)*100));
-		return Rock;
+		_worlds[Index].ARock -= _worlds[Index].ARock;
+		RockChanged.Invoke(new PercentageChanged((_worlds[Index].ARock/_worlds[Index].Rock)*100));
+		return _worlds[Index].ARock;
 	}
 	
 	public double GrabFood(double amount) 
 	{
-		if ((Food - amount) > 0) {
-			Food -= amount;
-			FoodChanged.Invoke(new PercentageChanged((Food/_food)*100));
+		if ((_worlds[Index].AFood - amount) > 0) {
+			_worlds[Index].AFood -= amount;
+			FoodChanged.Invoke(new PercentageChanged((_worlds[Index].AFood/_worlds[Index].Food)*100));
 			return amount;
 		} 
 		
-		if (Food == 0)
+		if (_worlds[Index].AFood == 0)
 			return -1;
 		
-		Food -= Food;
-		FoodChanged.Invoke(new PercentageChanged((Food/_food)*100));
-		return Food;
+		_worlds[Index].AFood -= _worlds[Index].AFood;
+		return _worlds[Index].AFood;
 	}
 }
