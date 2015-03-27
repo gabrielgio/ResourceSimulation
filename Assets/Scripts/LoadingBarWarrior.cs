@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -17,7 +17,7 @@ public class LoadingBarWarrior : MonoBehaviour {
 		
 	}
 	
-	public void OnPercentageChange(BuildWarriorrEventData data)
+	public void OnPercentageChange(WarriorrEventData data)
 	{
 		value.sizeDelta = new Vector2 ((float)(size * data.Percentage/100), value.sizeDelta.y);
 

@@ -27,6 +27,10 @@ public class GameSetting{
 
 	public CostBuildWarrior COST_BUILD_WARRIOR { get; private set; }
 
+	public WarriorHealth WARRIOR_HEALTH { get; private set; }
+
+	public WarriorDamage WARRIOR_DAMAGE { get; private set; }
+
 	static public GameSetting Instance 
 	{
 		get{
@@ -43,6 +47,8 @@ public class GameSetting{
 		_jsonNode = JSON.Parse (textFile.text);
 		TIME_BUILD_WARRIOR = new TimeBuildWarrior (_jsonNode);
 		COST_BUILD_WARRIOR = new CostBuildWarrior (_jsonNode);
+		WARRIOR_HEALTH = new WarriorHealth (_jsonNode);
+		WARRIOR_DAMAGE = new WarriorDamage (_jsonNode);
 	}
 }
 
@@ -58,6 +64,40 @@ public class TimeBuildWarrior
 	}
 
 	public TimeBuildWarrior(JSONNode jsonNode)
+	{
+		_jsonNode = jsonNode;
+	}
+}
+
+public class WarriorHealth
+{
+	private JSONNode _jsonNode;
+	
+	public double this[WarriorType type]
+	{
+		get{
+			return _jsonNode ["batlle"]["health"][type.ToString()].AsDouble;
+		}
+	}
+	
+	public WarriorHealth(JSONNode jsonNode)
+	{
+		_jsonNode = jsonNode;
+	}
+}
+
+public class WarriorDamage
+{
+	private JSONNode _jsonNode;
+	
+	public double this[WarriorType type]
+	{
+		get{
+			return _jsonNode ["battle"]["damage"][type.ToString()].AsDouble;
+		}
+	}
+	
+	public WarriorDamage(JSONNode jsonNode)
 	{
 		_jsonNode = jsonNode;
 	}

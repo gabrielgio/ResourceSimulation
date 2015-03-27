@@ -4,44 +4,35 @@ using System;
 
 public class Warrior{
 
-	public const double TIME_MINION = 60;
-
-	public const double TIME_WARRIOR = 60 * 2;
-
-	public const double TIME_LEGEND = 60 * 3;
-
 	private double _timeIn = 0;
 
 	private WarriorType _type;
 
 	public bool IsBuilt {
 		get {
-			switch (Type) {
-			case WarriorType.Minion:
-				return (TIME_MINION - _timeIn) <= 0;
-
-			case WarriorType.Warrior:
-				return (TIME_WARRIOR - _timeIn) <= 0;
-
-			case WarriorType.Legend:
-				return (TIME_LEGEND - _timeIn) <= 0;
-
-			default:
-				return false;
-			}
+			return (GameSetting.Instance.TIME_BUILD_WARRIOR [Type] - _timeIn) <= 0;
 		}
 	}
+
+	public double Health { private set; get; }
 
 	public WarriorType Type { private set; get; }
 		
 	public Warrior(WarriorType type)
 	{
 		Type = type;
+		Health = GameSetting.Instance.WARRIOR_HEALTH [type];
 	}
 
 	public void ApplyTimeBuild(double time)
 	{	
 		_timeIn += time;
+	}
+
+	public bool ApplyDamage(double damage)
+	{
+		Health -= damage;
+		return Health >= 0;
 	}
 }
 

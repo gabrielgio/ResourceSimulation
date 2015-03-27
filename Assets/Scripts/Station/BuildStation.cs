@@ -18,7 +18,7 @@ public class BuildStation : MonoBehaviour {
 
 	public UnityEvent OnBuiltWorker;
 
-	public BuildWarriorEvent BuildWarriorChanged;
+	public WarriorEvent BuildWarriorChanged;
 
 	public WarriorDoneEvent BuildWarriorDone;
 
@@ -53,7 +53,7 @@ public class BuildStation : MonoBehaviour {
 				BuildWarriorDone.Invoke(new WarriorDone(tuple.Value1));
 			}
 
-			BuildWarriorChanged.Invoke(new BuildWarriorrEventData((tuple.Value2/time)*100, tuple.Value1));
+			BuildWarriorChanged.Invoke(new WarriorrEventData((tuple.Value2/time)*100, tuple.Value1));
 		}
 	}
 
