@@ -1,45 +1,49 @@
 {
-  "build":{
-    "worker_time" : 60,
-    "worker_cost" : {
-    	"Wood" : 1,
-    	"Rock" : 0,
-    	"Iron" : 0
+    "build": {
+        "worker_time": 15,
+        "worker_cost": {
+            "Wood": 1,
+            "Rock": 0,
+            "Food": 0
+        },
+        "warrior_cost": {
+            "Minion": {
+                "Wood": 1,
+                "Rock": 0,
+                "Food": 0
+            },
+            "Warrior": {
+                "Wood": 1,
+                "Rock": 0,
+                "Food": 0
+            },
+            "Legend": {
+                "Wood": 1,
+                "Rock": 0,
+                "Food": 0
+            }
+        },
+        "Minion": 60,
+        "Warrior": 180,
+        "Legend": 220
     },
-    "warrior_cost" :{
-    	"Minion" : {
-	    	"Wood" : 1,
-	    	"Rock" : 0,
-	    	"Iron" : 0
-    	},
-    	"Warrior" : {
-	    	"Wood" : 1,
-	    	"Rock" : 0,
-	    	"Iron" : 0
-    	},
-    	"Legend" : {
-	    	"Wood" : 1,
-	    	"Rock" : 0,
-	    	"Iron" : 0
-    	}
+    "work": {
+        "worker_rate": {
+            "Wood": 0.016,
+            "Rock": 0.010,
+            "Food": 0.008
+        }
     },
-    "Minion" : 60,
-	"Warrior" : 180,
-	"Legend" : 220
-  },
-  "work":{
-    "worker_rate" : 0.016
-  },
-  "batlle" : {
-  	"health":{
-  		"Minion" : 10.0,
-		"Warrior" : 30.0,
-		"Legend" : 70.0
-  	},
-  	"damage":{
-  		"Minion" : 1,
-		"Warrior" : 3,
-		"Legend" : 7
-	}
-  }
+    "batlle": {
+        "health": {
+            "Minion": "10.0",
+            "Warrior": "30.0",
+            "Legend": "70.0"
+        },
+        "damage": {
+            "Minion": "0.5",
+            "Warrior": "1.0",
+            "Legend": "3.0"
+        }
+    }
 }

@@ -22,8 +22,13 @@ public class BuildStation : MonoBehaviour {
 
 	public WarriorDoneEvent BuildWarriorDone;
 
+	public WorkStation Work;
+
 	void Start () {
 		Warriors = new Stack<Tuple<WarriorType,double>> ();
+
+		if (Work == null)
+			Work = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
 	}
 
 	void Update () {
@@ -57,7 +62,57 @@ public class BuildStation : MonoBehaviour {
 		}
 	}
 
-	public void BuildWorker(){
+	public int BuildWorker(int amount)
+	{
+		var tuple = GameSetting.Instance.COST_BUILD_WORKER;
+
+		int count = 0;
+
+		for (int i = 0; i < amount; i++) {
+			if (tuple.Value1 <= Work.Wood &&
+				tuple.Value2 <= Work.Rock &&
+				tuple.Value3 <= Work.Food) {
+						
+				Work.Wood -= tuple.Value1;
+				Work.Rock -= tuple.Value2;
+				Work.Food -= tuple.Value3;
+				BuildWorker ();
+				count++;
+			}
+			else
+				break;
+		}
+		
+		return count;
+	}
+
+	public int BuildWarrior(WarriorType type, int amount)
+	{
+		var tuple = GameSetting.Instance.COST_BUILD_WARRIOR[type];
+		
+		int count = 0;
+		
+		for (int i = 0; i < amount; i++) {
+			if (tuple.Value1 <= Work.Wood &&
+			    tuple.Value2 <= Work.Rock &&
+			    tuple.Value3 <= Work.Food) {
+				
+				Work.Wood -= tuple.Value1;
+				Work.Rock -= tuple.Value2;
+				Work.Food -= tuple.Value3;
+				BuildWarrior (type);
+				count++;
+			}
+			else
+				break;
+		}
+		
+		return count;
+
+	}
+
+
+	private void BuildWorker(){
 		WorkerOnBuild++;
 	}
 
@@ -70,6 +125,8 @@ public class BuildStation : MonoBehaviour {
 		}
 
 		stack.Push (new Tuple<WarriorType,double> (warrior, 0));
+
+		Warriors.Clear ();
 
 		foreach (var item in stack) {
 			Warriors.Push(item);

@@ -22,6 +22,7 @@ public class Input : Singleton<Input> {
 		cmds.Add (new Load ());
 		cmds.Add (new Msg ());
 		cmds.Add (new Move ());
+		cmds.Add (new Add ());
 	}
 
 	public string[] ProcessInput(string input){

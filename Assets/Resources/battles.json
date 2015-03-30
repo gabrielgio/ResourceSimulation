@@ -1,0 +1,38 @@
+{
+    "battles": [
+        {
+        	"name" : "enemy 1",
+            "health": "500.0",
+            "battle": [
+                {
+                    "name": "Minion",
+                    "time": "0.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "10000.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "30.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "30.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "30.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "30.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "30.0"
+                }
+            ]
+        }
+    ]
+}

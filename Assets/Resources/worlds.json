@@ -2,9 +2,9 @@
   "worlds": [
     {
       "name": "World 1",
-      "Wood" : "100.0",
-      "Rock" : "100.0",
-      "Food" : "100.0"
+      "Wood" : "10.0",
+      "Rock" : "4.0",
+      "Food" : "3.0"
     },
     {
       "name": "World 2",

@@ -24,6 +24,11 @@
         {
             "code": "default",
             "msg": "<color=red>There is no preset for {0}</color>"
+        },
+        ,
+        {
+            "code": "g",
+            "msg": "<color=green>{0}</color>"
         }
     ],
     "feedback" : [
@@ -45,7 +50,7 @@
       {
         "code" : "not_enough_resource",
         "msgcode" : "r",
-        "msg" : "Not enouth {0} to build a {1}"
+        "msg" : "Not enouth resource to build a {0}"
       },
       {
         "code" : "invalid_param",
@@ -81,6 +86,12 @@
         "code" : "param_missing",
         "msgcode" : "r",
         "msg" : "Param missing"
+      },
+      {
+      	"code" : "enemy_build",
+        "msgcode" : "g",
+        "msg" : "Enemy have been built a {0}"
       }
+
     ]
 }

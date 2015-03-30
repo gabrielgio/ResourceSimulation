@@ -5,5 +5,5 @@ public enum ResourceSource {
 
 	Wood,
 	Rock,
-	Iron
+	Food
 }

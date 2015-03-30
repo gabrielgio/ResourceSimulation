@@ -25,6 +25,7 @@ public class Prompt : MonoBehaviour {
 		if (TextIn != null) {
 			TextIn.onEndEdit.AddListener (EditEnd);
 		}
+		TextIn.ActivateInputField ();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +33,7 @@ public class Prompt : MonoBehaviour {
 	
 	}
 
-	void EditEnd (string arg)
+	public void EditEnd (string arg)
 	{
 		WriteOnPrompt (Input.Instance.Process (arg));
 		commands.Add (arg);
@@ -46,11 +47,22 @@ public class Prompt : MonoBehaviour {
 		
 		if (TextIn != null) {
 			TextIn.text = "";
+
 			TextIn.ActivateInputField ();
 		}
 		
 		if (Scroll != null) {
 			Scroll.value = 0;
 		}
+	}
+
+	public void BuildWorker()
+	{
+		EditEnd ("build:worker");
+	}
+
+	public void BuildWarrior(string type)
+	{
+		EditEnd (string.Format ("build:{0}", type));
 	}
 }

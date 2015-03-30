@@ -16,27 +16,20 @@ public class Bld : Singleton<Bld>, ICmd{
 			return Msg.Instance.ProcessFeedback("param_missing");
 		
 		int times = 1;
+
 		int builts = 0;
-		
+
 		if (args.Length >= 3)
 			int.TryParse (args [2], out times);
-		
+
+		BuildStation buildStation = GameObject.Find ("Main Camera").GetComponent<BuildStation> ();
+
 		if (args [1] == "worker") {
-			WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
-			BuildStation buildStation = GameObject.Find ("Main Camera").GetComponent<BuildStation> ();
-			while (times-- != 0) {
-				if (workStation.Wood > buildStation.WorkerPrice) {
-					workStation.Wood -= buildStation.WorkerPrice;
-					buildStation.BuildWorker ();
-					builts++;
-				}
-				else{
-					break;
-				}
-			}
-			
+
+			builts = buildStation.BuildWorker (times);
+
 			if(builts == 0)
-				return Msg.Instance.ProcessFeedback ("not_enough_resource","Wood","Worker");
+				return Msg.Instance.ProcessFeedback ("not_enough_resource","Worker");
 			else
 				return Msg.Instance.ProcessFeedback("worker_build", builts.ToString());
 		}
@@ -44,22 +37,11 @@ public class Bld : Singleton<Bld>, ICmd{
 		string upParams =  args [1].FirstCharToUpper();
 		
 		if (upParams == WarriorType.Legend.ToString () || upParams == WarriorType.Warrior.ToString () || upParams == WarriorType.Minion.ToString ()) {
-			
-			WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
-			BuildStation buildStation = GameObject.Find ("Main Camera").GetComponent<BuildStation> ();
-			while (times-- >= 0) {
-				if (workStation.Wood > buildStation.WorkerPrice) {
-					workStation.Wood -= buildStation.WorkerPrice;
-					buildStation.BuildWarrior((WarriorType)Enum.Parse(typeof(WarriorType), upParams));
-					builts++;
-				}
-				else{
-					break;
-				}
-			}
-			
+
+			builts = buildStation.BuildWarrior((WarriorType)Enum.Parse(typeof(WarriorType), upParams), times);
+
 			if(builts == 0)
-				return Msg.Instance.ProcessFeedback ("not_enough_resource","Wood","Warrior");
+				return Msg.Instance.ProcessFeedback ("not_enough_resource","Warrior");
 			else
 				return Msg.Instance.ProcessFeedback("warrior_build", builts.ToString());
 		}

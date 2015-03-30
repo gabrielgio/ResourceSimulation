@@ -6,14 +6,6 @@ public class Warrior{
 
 	private double _timeIn = 0;
 
-	private WarriorType _type;
-
-	public bool IsBuilt {
-		get {
-			return (GameSetting.Instance.TIME_BUILD_WARRIOR [Type] - _timeIn) <= 0;
-		}
-	}
-
 	public double Health { private set; get; }
 
 	public WarriorType Type { private set; get; }

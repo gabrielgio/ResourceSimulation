@@ -14,12 +14,10 @@ public class GameSetting : Singleton<GameSetting> {
 		get{
 			double value1 = _jsonNode ["build"] ["worker_cost"] ["Wood"].AsDouble;
 			double value2 = _jsonNode ["build"] ["worker_cost"] ["Rock"].AsDouble;
-			double value3 = _jsonNode ["build"] ["worker_cost"] ["Iron"].AsDouble;
+			double value3 = _jsonNode ["build"] ["worker_cost"] ["Food"].AsDouble;
 			return new Tuple<double, double, double> (value1, value2, value3);
 		}
 	}
-
-	public double WORKER_RATE { get { return _jsonNode ["work"] ["worker_rate"].AsDouble; } }
 
 	public TimeBuildWarrior TIME_BUILD_WARRIOR { get; private set; }
 
@@ -29,6 +27,8 @@ public class GameSetting : Singleton<GameSetting> {
 
 	public WarriorDamage WARRIOR_DAMAGE { get; private set; }
 
+	public WorkRate WORKER_RATE { get; private set; }
+
 	public GameSetting()
 	{
 		TextAsset textFile = (TextAsset)Resources.Load("settings", typeof(TextAsset));
@@ -37,6 +37,7 @@ public class GameSetting : Singleton<GameSetting> {
 		COST_BUILD_WARRIOR = new CostBuildWarrior (_jsonNode);
 		WARRIOR_HEALTH = new WarriorHealth (_jsonNode);
 		WARRIOR_DAMAGE = new WarriorDamage (_jsonNode);
+		WORKER_RATE = new WorkRate (_jsonNode);
 	}
 }
 
@@ -81,11 +82,29 @@ public class WarriorDamage
 	public double this[WarriorType type]
 	{
 		get{
-			return _jsonNode ["battle"]["damage"][type.ToString()].AsDouble;
+			return _jsonNode ["batlle"]["damage"][type.ToString()].AsDouble;
 		}
 	}
 	
 	public WarriorDamage(JSONNode jsonNode)
+	{
+		_jsonNode = jsonNode;
+	}
+}
+
+public class WorkRate
+{
+	private JSONNode _jsonNode;
+	
+	public double this[ResourceSource type]
+	{
+		get{
+			return _jsonNode ["work"]["worker_rate"][type.ToString()].AsDouble;
+
+		}
+	}
+
+	public WorkRate(JSONNode jsonNode)
 	{
 		_jsonNode = jsonNode;
 	}
@@ -100,7 +119,7 @@ public class CostBuildWarrior
 		get{
 			double value1 = _jsonNode ["build"]["warrior_cost"][type.ToString()]["Wood"].AsDouble;
 			double value2 = _jsonNode ["build"]["warrior_cost"][type.ToString()]["Rock"].AsDouble;
-			double value3 = _jsonNode ["build"]["warrior_cost"][type.ToString()]["Iron"].AsDouble;
+			double value3 = _jsonNode ["build"]["warrior_cost"][type.ToString()]["Food"].AsDouble;
 			return new Tuple<double, double, double>(value1, value2, value3);
 		}
 	}

@@ -7,7 +7,7 @@ public class Move : Singleton<Move>, ICmd {
 
 	public string[] Functions{
 		get{
-			return new string[]{"wood", "iron", "rock"};
+			return new string[]{"wood", "food", "rock"};
 		}
 	}
 
@@ -15,10 +15,10 @@ public class Move : Singleton<Move>, ICmd {
 	{
 		WorkStation workStation = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
 		
-		if (!(args [0] == "wood" || args [0] == "iron" || args [0] == "rock")) 
+		if (!(args [0] == "wood" || args [0] == "food" || args [0] == "rock")) 
 			return ProcessFeedback("wrong","CmdMove");
 		
-		if (!(args [1] == "wood" || args [1] == "iron" || args [1] == "rock"))
+		if (!(args [1] == "wood" || args [1] == "food" || args [1] == "rock"))
 			return ProcessFeedback ("invalid_resource", args [1]);
 		
 		int times = 1;

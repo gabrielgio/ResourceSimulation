@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
@@ -33,8 +33,8 @@ public class WorkerUpdater : MonoBehaviour {
 			text.text = workStation.Rock.ToString();
 			break;
 
-		case Info.Iron:
-			text.text = workStation.Iron.ToString();
+		case Info.Food:
+			text.text = workStation.Food.ToString();
 			break;
 
 		case Info.Workers:
@@ -49,8 +49,8 @@ public class WorkerUpdater : MonoBehaviour {
 			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Rock).ToString();
 			break;
 
-		case Info.WorkersOnIron:
-			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Iron).ToString();
+		case Info.WorkersOnFood:
+			text.text = workStation.Workers.Count(x => x.Type == ResourceSource.Food).ToString();
 			break;
 
 		case Info.WorkerOnBuild:
@@ -76,6 +76,22 @@ public class WorkerUpdater : MonoBehaviour {
 		case Info.Warriors:
 			text.text = battleStation.Warriors.Count().ToString();
 			break;
+
+		case Info.EnemyWarriors:
+				text.text = battleStation.EnemyWarriors.Count().ToString();
+			break;
+
+		case Info.EnemyLegend:
+			text.text = battleStation.EnemyWarriors.Count(x => x.Type ==  WarriorType.Legend).ToString();
+			break;
+			
+		case Info.EnemyWarrior:
+			text.text = battleStation.EnemyWarriors.Count(x => x.Type ==  WarriorType.Warrior).ToString();
+			break;
+			
+		case Info.EnemyMinion:
+			text.text = battleStation.EnemyWarriors.Count(x => x.Type ==  WarriorType.Minion).ToString();
+			break;
 		}
 	}
 }
@@ -84,16 +100,20 @@ public enum Info
 {
 	Wood,
 	Rock,
-	Iron,
+	Food,
 	Workers,
 	WorkersOnWood,
 	WorkersOnRock,
-	WorkersOnIron,
+	WorkersOnFood,
 	PercentageWorker,
 	WorkerOnBuild,
 	WarriorOnBuild,
 	Legend,
 	Warrior,
 	Minion,
-	Warriors
+	Warriors,
+	EnemyWarriors,
+	EnemyLegend,
+	EnemyWarrior,
+	EnemyMinion
 }
