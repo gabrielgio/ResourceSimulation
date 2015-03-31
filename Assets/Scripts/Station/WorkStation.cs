@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,8 +13,9 @@ public class WorkStation : MonoBehaviour {
 	public List<Worker> Workers{ get { return _workers; } }
 
 	public WorldStation World;
-	
-	// Use this for initialization
+
+	public StoryStation Story;
+
 	void Start () {
 		_workers = new List<Worker> ();
 
@@ -22,9 +23,15 @@ public class WorkStation : MonoBehaviour {
 
 		if (World == null)
 			World = GameObject.Find ("Main Camera").GetComponent<WorldStation> ();
+
+		if(Story == null)
+			Story = GameObject.Find ("Main Camera").GetComponent<StoryStation> ();
 	}
 
 	void Update () {
+
+		if (Story.Paused)
+			return;
 
 		foreach (var item in _workers) {
 
@@ -49,25 +56,6 @@ public class WorkStation : MonoBehaviour {
 				break;
 			}
 		}
-	}
-
-	public bool BuildWorker(int amount)
-	{
-		var tuple = GameSetting.Instance.COST_BUILD_WORKER;
-
-		if (tuple.Value1 < Wood &&
-			tuple.Value2 < Rock &&
-			tuple.Value3 < Food) {
-
-			Wood -= tuple.Value1;
-			Rock -= tuple.Value2;
-			Food -= tuple.Value3;
-
-			AddWorker(ResourceSource.Wood);
-			return  true;
-		}
-
-		return false;
 	}
 
 	public void OnBuiltWorker()

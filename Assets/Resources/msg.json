@@ -90,7 +90,12 @@
       {
       	"code" : "enemy_build",
         "msgcode" : "g",
-        "msg" : "Enemy have been built a {0}"
+        "msg" : "Enemy has built a {0}"
+      },
+      {
+        "code" : "enemy_loaded",
+        "msgcode" : "b",
+        "msg" : "Enemy loaded"
       }
 
     ]

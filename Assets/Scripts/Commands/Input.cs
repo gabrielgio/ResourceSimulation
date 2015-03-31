@@ -19,10 +19,12 @@ public class Input : Singleton<Input> {
 	{
 		cmds = new List<ICmd> ();
 		cmds.Add (new Bld ());
-		cmds.Add (new Load ());
-		cmds.Add (new Msg ());
-		cmds.Add (new Move ());
+		cmds.Add (new Pause ());
+		cmds.Add (new Help (cmds.ToArray()));
 		cmds.Add (new Add ());
+		cmds.Add (new Msg ());
+		cmds.Add (new Load ());
+		cmds.Add (new Move ());
 	}
 
 	public string[] ProcessInput(string input){

@@ -19,6 +19,8 @@ public class WorldStation : MonoBehaviour {
 	public PercentageChangedEvent FoodChanged;
 
 	public WorldChangedEventTrigger WolrdChanged;
+
+	public StoryStation Story;
 	
 	void Start () {
 
@@ -26,7 +28,9 @@ public class WorldStation : MonoBehaviour {
 		_jsonNode = JSON.Parse (textFile.text);
 		_worlds = new List<World> ();
 		LoadWorlds ();
-		LoadWorld (Index);
+
+		if(Story == null)
+			Story = GameObject.Find ("Main Camera").GetComponent<StoryStation> ();
 	}
 
 	public void LoadWorlds(){

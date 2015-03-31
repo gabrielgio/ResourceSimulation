@@ -24,14 +24,23 @@ public class BuildStation : MonoBehaviour {
 
 	public WorkStation Work;
 
+	public StoryStation Story;
+
 	void Start () {
 		Warriors = new Stack<Tuple<WarriorType,double>> ();
 
 		if (Work == null)
 			Work = GameObject.Find ("Main Camera").GetComponent<WorkStation> ();
+
+		if(Story == null)
+			Story = GameObject.Find ("Main Camera").GetComponent<StoryStation> ();
 	}
 
 	void Update () {
+
+		if (Story.Paused)
+			return;
+
 		if (WorkerOnBuild != 0) {
 
 			_time += Time.deltaTime;
@@ -116,7 +125,7 @@ public class BuildStation : MonoBehaviour {
 		WorkerOnBuild++;
 	}
 
-	public void BuildWarrior(WarriorType warrior){
+	private void BuildWarrior(WarriorType warrior){
 
 		var stack = new Stack<Tuple<WarriorType,double>> ();
 

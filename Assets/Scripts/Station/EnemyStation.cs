@@ -15,7 +15,10 @@ public class EnemyStation : MonoBehaviour {
 
 	public Prompt Output;
 
-	// Use this for initialization
+	public StoryStation Story;
+
+	public StringChangedEvent EnemyChanged;
+
 	void Start () {
 		battles = new List<Battle> ();
 		commands = new Queue<CommandTime> ();
@@ -25,10 +28,14 @@ public class EnemyStation : MonoBehaviour {
 
 		ParseJson ();
 
-		LoadBattle ("enemy 1");
+		if(Story == null)
+			Story = GameObject.Find ("Main Camera").GetComponent<StoryStation> ();
 	}
 
 	void Update () {
+
+		if (Story.Paused)
+			return;
 
 		if (commands.Count () == 0)
 			return;
@@ -43,7 +50,7 @@ public class EnemyStation : MonoBehaviour {
 
 	}
 
-	private void LoadBattle(string name)
+	public void LoadBattle(string name)
 	{
 		Battle battle = battles.FirstOrDefault (x => x.Name == name);
 
@@ -53,6 +60,22 @@ public class EnemyStation : MonoBehaviour {
 		commands.Clear ();
 
 		battle.Commands.ForEach (x => commands.Enqueue (x.Clone()));
+
+		EnemyChanged.Invoke (battle.Name);
+	}
+
+	public void LoadBattle(int index)
+	{
+		Battle battle = battles [index];
+		
+		if (battle == null)
+			return;
+		
+		commands.Clear ();
+		
+		battle.Commands.ForEach (x => commands.Enqueue (x.Clone()));
+		
+		EnemyChanged.Invoke (battle.Name);
 	}
 
 	private void ParseJson()

@@ -1,7 +1,45 @@
 {
     "battles": [
         {
-        	"name" : "enemy 1",
+        	"name" : "Carlão",
+            "health": "500.0",
+            "battle": [
+                {
+                    "name": "Minion",
+                    "time": "15.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "70.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "70.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "70.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "70.0"
+                },
+                {
+                    "name": "Minion",
+                    "time": "70.0"
+                },
+                {
+                    "name": "Warrior",
+                    "time": "80.0"
+                },
+                {
+                    "name": "Legend",
+                    "time": "80.0"
+                }
+            ]
+        },
+        {
+        	"name" : "enemy 2",
             "health": "500.0",
             "battle": [
                 {

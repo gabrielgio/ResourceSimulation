@@ -1,0 +1,84 @@
+{
+  "game": [
+    {
+      "command" : "msg:i:      Welcome to the tutorial.\n",
+      "time" : 3.0
+    },
+    {
+      "command" : "msg:i:      This game is a real time \"strategy\", so game will be happing while you are typing.\n",
+      "time" : 3.0
+    },
+    {
+      "command" : "msg:i:      This game happens in scenes, in each scene you fight against some enemies in different territories.\n",
+      "time" : 3.0
+    },
+    {
+      "command" : "msg:i:      And each territory has a limited amount of resources. So you can run out of resource in a territory.\n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:      On the first left panel you have the building area, where it will be showing the progress of you buildings, you can build simultaneously a worker and a type of warrior.\n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:      Below of building panel you have the worker area on this area you can see how many worker you heve and where they are working and the amount of resource that you collected.\n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:      Below of worker panel you have the battleground, in this panel you can see how many warrior of each type you and your enemy(in red) have. You can also see your and your enemy health and the total of warrior for each one\n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:      The damage of warrior is dealed on enemy warrior (and vise-versa), when you or your enemy ran out of warrior the damage will be dealed on the health. \n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:       Now to interact to the game you will need to do commands. See how is those command works.\n",
+      "time" : 7.0
+    },
+    {
+      "command" : "msg:i:       [command]:[param]:[param]:[param]...\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       Exemples\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       build:worker:[number of worker, optional]\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       build:[minion|warrior|legend]:[number of warrior, optional]\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       To see entire list of commands type \"help\"\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       Beat the first enemy to finish the tutorial.\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "msg:i:       Setting up first scenery.\n",
+      "time" : 2.0
+    },
+    {
+      "command" : "ld:e:Carlão",
+      "time" : 0.0
+    },
+    {
+      "command" : "ld:w:0",
+      "time" : 0.0
+    },
+    {
+      "command" : "unpause",
+      "time" : 0.0
+    }
+    {
+      "command" : "msg:i:       GO!.\n",
+      "time" : 0.0
+    },
+  ]
+}

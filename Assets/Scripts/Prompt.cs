@@ -14,12 +14,13 @@ public class Prompt : MonoBehaviour {
 
 	private List<string> commands;
 
+	public StringChangedEvent StringChanged;
+
 	public Prompt()
 	{
 		commands = new List<string> ();
 	}
 
-	// Use this for initialization
 	void Start () {
 
 		if (TextIn != null) {
@@ -27,14 +28,15 @@ public class Prompt : MonoBehaviour {
 		}
 		TextIn.ActivateInputField ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {	
 	
 	}
 
 	public void EditEnd (string arg)
 	{
+		arg = arg.Replace ("\n", "");
+
 		WriteOnPrompt (Input.Instance.Process (arg));
 		commands.Add (arg);
 	}

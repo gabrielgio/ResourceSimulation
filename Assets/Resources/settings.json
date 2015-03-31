@@ -1,6 +1,6 @@
 {
     "build": {
-        "worker_time": 15,
+        "worker_time": 30,
         "worker_cost": {
             "Wood": 1,
             "Rock": 0,
@@ -14,18 +14,18 @@
             },
             "Warrior": {
                 "Wood": 1,
-                "Rock": 0,
+                "Rock": 1,
                 "Food": 0
             },
             "Legend": {
                 "Wood": 1,
-                "Rock": 0,
-                "Food": 0
+                "Rock": 1,
+                "Food": 1
             }
         },
-        "Minion": 60,
-        "Warrior": 180,
-        "Legend": 220
+        "Minion": 15,
+        "Warrior": 30,
+        "Legend": 60
     },
     "work": {
         "worker_rate": {
@@ -35,6 +35,7 @@
         }
     },
     "batlle": {
+
         "health": {
             "Minion": "10.0",
             "Warrior": "30.0",

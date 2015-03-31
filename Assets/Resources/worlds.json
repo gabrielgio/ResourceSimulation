@@ -1,8 +1,8 @@
 {
   "worlds": [
     {
-      "name": "World 1",
-      "Wood" : "10.0",
+      "name": "Acre",
+      "Wood" : "30.0",
       "Rock" : "4.0",
       "Food" : "3.0"
     },

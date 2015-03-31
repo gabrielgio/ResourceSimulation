@@ -54,7 +54,7 @@ public class Msg : Singleton<Msg>, ICmd {
 			return Cmd ("msg", "i", msg [1]);
 
 		if (_presets.ContainsKey (msg [1]))
-			return string.Format (_presets [msg [1]], msg [2]);
+			return string.Format (_presets [msg [1]], msg.Skip(2).Aggregate((i, j) => i + ":" + j));
 
 		return string.Format (_presets ["default"], msg [1]);
 

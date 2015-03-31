@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Events;
 
 public class BattleStation : MonoBehaviour {
 
@@ -24,13 +25,32 @@ public class BattleStation : MonoBehaviour {
 	public PercentageChangedEvent HealthChanged;
 
 	public PercentageChangedEvent EnemyHealthChanged;
-	
+
+	public StoryStation Story;
+
+	public UnityEvent YouLose;
+
+	public UnityEvent YouWon;
+
 	void Start () {
 		Warriors = new Stack<Warrior> ();
 		EnemyWarriors = new Stack<Warrior> ();
+
+
+		if(Story == null)
+			Story = GameObject.Find ("Main Camera").GetComponent<StoryStation> ();
 	}
 
 	void Update () {
+
+		if (Story.Paused)
+			return;
+
+		if (Health <= 0)
+			YouLose.Invoke ();
+
+		if (EnemyHealth <= 0)
+			YouWon.Invoke ();
 
 		if (Warriors.Count == 0 && EnemyWarriors.Count >= 1) {
 
@@ -57,11 +77,11 @@ public class BattleStation : MonoBehaviour {
 
 		}else if (Warriors.Count >= 1 && EnemyWarriors.Count >= 1) {
 
-			Warrior enemyWarrior = EnemyWarriors.Pop();
-			Warrior warrior = Warriors.Pop();
-
 			double damage = Warriors.Sum(x =>  GameSetting.Instance.WARRIOR_DAMAGE[x.Type] * Time.deltaTime);
 			double enemyDamage = EnemyWarriors.Sum(x =>  GameSetting.Instance.WARRIOR_DAMAGE[x.Type] * Time.deltaTime);
+
+			Warrior enemyWarrior = EnemyWarriors.Pop();
+			Warrior warrior = Warriors.Pop();
 
 			if(warrior.ApplyDamage(enemyDamage))
 				Warriors.Push(warrior);
@@ -70,7 +90,7 @@ public class BattleStation : MonoBehaviour {
 				EnemyWarriors.Push(enemyWarrior);
 
 			WarriorHealthChanged.Invoke (new WarriorrEventData ((warrior.Health / GameSetting.Instance.WARRIOR_HEALTH [warrior.Type]) * 100, warrior.Type));
-			EnemyWarriorHealthChanged.Invoke (new WarriorrEventData ((enemyWarrior.Health / GameSetting.Instance.WARRIOR_HEALTH [warrior.Type]) * 100, enemyWarrior.Type));
+			EnemyWarriorHealthChanged.Invoke (new WarriorrEventData ((enemyWarrior.Health / GameSetting.Instance.WARRIOR_HEALTH [enemyWarrior.Type]) * 100, enemyWarrior.Type));
 		}
 
 	}
@@ -93,7 +113,8 @@ public class BattleStation : MonoBehaviour {
 	}
 
 
-	public void WarriorDone(WarriorDone warrior) {
+	public void WarriorDone(WarriorDone warrior) 
+	{
 		var stack = new Stack<Warrior> ();
 		
 		foreach (var item in Warriors) {

@@ -14,6 +14,8 @@ public class Warrior{
 	{
 		Type = type;
 		Health = GameSetting.Instance.WARRIOR_HEALTH [type];
+
+		Debug.Log(string.Format("health: {0}", Health));
 	}
 
 	public void ApplyTimeBuild(double time)
